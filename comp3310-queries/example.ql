@@ -7,6 +7,9 @@
 
 import java
 
-from BlockStmt b
-where b.getNumStmt() = 0
-select b, "This is an empty block."
+from MethodAccess call, LoopStmt loop
+where 
+    loop.getAChild*() = call.getEnclosingStmt() and
+    call.getMethod().hasName("nextLine") and
+    call.getMethod().getDeclaringType().hasQualifiedName("java.util", "Scanner")
+select call, "This is a call to the nextline method within a loop" 
